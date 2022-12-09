@@ -5,12 +5,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.List;
 
 import common.jdbc.JdbcTemplate;
 
-public class BoardDao {
+public class CopyBoardDaoCopy {
 // 최소 5개 
 //	insert - 등록
 	public int insert(Connection conn, BoardVo vo) {
@@ -34,13 +33,12 @@ public class BoardDao {
 //		    (SELECT BRESTEP FROM BOARD WHERE BNO='&답글번호')+1,
 //		    'EJKIM', 'A')
 //		;
-		String sql = "INSERT INTO BOARD (BNO, BTITLE, BCONTENT, BREF, BRELEVEL, BRESTEP, BWRITER, BTYPE)";
-		sql += "VALUES ((SELECT NVL(MAX(BNO),0)+1 FROM BOARD), ?,?, (SELECT NVL(MAX(BNO),0)+1 FROM BOARD), 0, 1, 'EJKIM', 'A')";
+		String sql = "insert into board";
 		PreparedStatement pstmt = null;
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, vo.getBtitle());
-			pstmt.setString(2, vo.getBcontent());
+//			pstmt.setString(1, vo.getBtitle());
+//			pstmt.setString(2, vo.getBcontent());
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -102,24 +100,7 @@ public class BoardDao {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
-			if(rs.next()) {
-				volist = new ArrayList<BoardVo>();
-				do {
-					BoardVo vo = new BoardVo();
-					vo = new BoardVo();
-					vo.setBcnt(rs.getInt("bcnt"));
-					vo.setBcontent(rs.getString("bcontent"));
-					vo.setBdate(rs.getTimestamp("bdate"));
-					vo.setBno(rs.getInt("bno"));
-					vo.setBref(rs.getInt("bref"));
-					vo.setBrelevel(rs.getInt("brelevel"));
-					vo.setBrestep(rs.getInt("brestep"));
-					vo.setBtitle(rs.getString("btitle"));
-					vo.setBtype(rs.getString("btype"));
-					vo.setBwriter(rs.getString("bwriter"));
-					volist.add(vo);
-				} while(rs.next());
-			}
+			// TODO:
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -139,19 +120,7 @@ public class BoardDao {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, bno);
 			rs = pstmt.executeQuery();
-			if(rs.next()) {
-				vo = new BoardVo();
-				vo.setBcnt(rs.getInt("bcnt"));
-				vo.setBcontent(rs.getString("bcontent"));
-				vo.setBdate(rs.getTimestamp("bdate"));
-				vo.setBno(rs.getInt("bno"));
-				vo.setBref(rs.getInt("bref"));
-				vo.setBrelevel(rs.getInt("brelevel"));
-				vo.setBrestep(rs.getInt("brestep"));
-				vo.setBtitle(rs.getString("btitle"));
-				vo.setBtype(rs.getString("btype"));
-				vo.setBwriter(rs.getString("bwriter"));
-			}
+			//TODO:
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {

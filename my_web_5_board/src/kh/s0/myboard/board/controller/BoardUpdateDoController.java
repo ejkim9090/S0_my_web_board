@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import kh.s0.myboard.board.model.BoardService;
+import kh.s0.myboard.board.model.BoardVo;
+
 /**
  * Servlet implementation class BoardUpdateDoController
  */
@@ -34,8 +37,10 @@ public class BoardUpdateDoController extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+	    BoardService service = new BoardService();
+	    BoardVo vo = new BoardVo();
+	    int result = service.update(vo, 1);
+		System.out.println(result);
 	}
 
 }

@@ -1,4 +1,4 @@
-package kh.s0.myboard.board.controller;
+package kh.s0.myboard.member.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -8,16 +8,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class BoardWriteController
+ * Servlet implementation class MemberUpdateController
  */
-@WebServlet("/board/write")
-public class BoardWriteController extends HttpServlet {
+@WebServlet("/MemberUpdateController")
+public class MemberUpdateController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public BoardWriteController() {
+    public MemberUpdateController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -26,17 +26,16 @@ public class BoardWriteController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("BoardWriteController: ");
-		//DB x
-		//view /url변화
-		String viewPath = "/WEB-INF/view/boardwrite.jsp";
-		request.getRequestDispatcher(viewPath).forward(request, response);
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-//	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//	}
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+	}
 
 }

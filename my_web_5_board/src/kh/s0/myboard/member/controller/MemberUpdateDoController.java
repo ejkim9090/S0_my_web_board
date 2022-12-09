@@ -1,4 +1,4 @@
-package kh.s0.myboard.board.controller;
+package kh.s0.myboard.member.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -7,17 +7,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import kh.s0.myboard.member.model.MemberService;
+import kh.s0.myboard.member.model.MemberVo;
+
 /**
- * Servlet implementation class BoardWriteController
+ * Servlet implementation class MemberUpdateDoController
  */
-@WebServlet("/board/write")
-public class BoardWriteController extends HttpServlet {
+@WebServlet("/MemberUpdateDoController")
+public class MemberUpdateDoController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public BoardWriteController() {
+    public MemberUpdateDoController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -26,17 +29,19 @@ public class BoardWriteController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("BoardWriteController: ");
-		//DB x
-		//view /url변화
-		String viewPath = "/WEB-INF/view/boardwrite.jsp";
-		request.getRequestDispatcher(viewPath).forward(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-//	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//	}
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("MemberInsertDoController: ");
+		
+		MemberVo vo = new MemberVo();  //TODO:
+		String mid = "";  // TODO:
+		MemberService service = new MemberService();
+		int result = service.update(vo, mid);
+		System.out.println(result);
+	}
 
 }

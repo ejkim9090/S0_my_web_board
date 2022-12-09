@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import kh.s0.myboard.board.model.BoardService;
 import kh.s0.myboard.board.model.BoardVo;
+import kh.s0.myboard.member.model.MemberService;
+import kh.s0.myboard.member.model.MemberVo;
 
 /**
  * Servlet implementation class BoardList
@@ -18,7 +20,7 @@ import kh.s0.myboard.board.model.BoardVo;
 @WebServlet("/board/list")
 public class BoardListController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+    
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -31,17 +33,34 @@ public class BoardListController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		BoardService service = new BoardService();
-		List<BoardVo> volist = service.selectList();
+		System.out.println("BoardListController: ");
 		
+		BoardService service = new BoardService();
+	    List<BoardVo> volist = service.selectList();
+		System.out.println(volist);
+
+		MemberService service2 = new MemberService();
+		List<MemberVo> memberlist = service2.selectList();
+		request.setAttribute("bbb", "일단 아무거나");
+		
+		request.setAttribute("aaa", volist);
+		String viewPath = "/WEB-INF/view/boardlist.jsp";  //TODO
+		
+		request.getRequestDispatcher(viewPath).forward(request, response);
+		
+		
+		
+		// 페이지 이동 방법 2가지
+//		response.sendRedirect("대부분99.9/url");
+//		request.getRequestDispatcher("대부분99.9/WEB-INF/view/xxx.jsp").forward(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-	}
+//	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//		// TODO Auto-generated method stub
+//		doGet(request, response);
+//	}
 
 }

@@ -20,7 +20,9 @@ public class MemberVo {
 	private String mauthcode;
 	private int mconsent1;
 	private int mtype;
+	// BusinessInfoVo 사용하지 않고 분리해서 사용
 	private String busno;
+	
 	public MemberVo() {
 		super();
 	}

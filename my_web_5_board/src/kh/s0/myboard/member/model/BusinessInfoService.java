@@ -5,10 +5,10 @@ import java.util.List;
 
 import common.jdbc.JdbcTemplate;
 
-public class MemberService {
-	private MemberDao dao = new MemberDao();
+public class BusinessInfoService {
+	private BusinessInfoDao dao = new BusinessInfoDao();
 //	insert - 등록
-	public int insert(MemberVo vo) {
+	public int insert(BusinessInfoVo vo) {
 		int result = 0;
 		Connection conn = JdbcTemplate.getConnection();
 		result = dao.insert(conn, vo);
@@ -16,34 +16,34 @@ public class MemberService {
 		return result;
 	}
 //	update - 수정
-	public int update(MemberVo vo, String mid/*주로 PK*/) {
+	public int update(BusinessInfoVo vo, String busno/*주로 PK*/) {
 		int result = 0;
 		Connection conn = JdbcTemplate.getConnection();
-		result = dao.update(conn, vo, mid);
+		result = dao.update(conn, vo, busno);
 		JdbcTemplate.close(conn);
 		return result;
 	}
 //	delete  - 삭제
-	public int delete(String mid/*주로 PK*/) {
+	public int delete(String busno/*주로 PK*/) {
 		int result = 0;
 		Connection conn = JdbcTemplate.getConnection();
-		result = dao.delete(conn, mid);
+		result = dao.delete(conn, busno);
 		JdbcTemplate.close(conn);	
 		return result;
 	}
 //	selectList  - 목록조회
-	public List<MemberVo> selectList(){
-		List<MemberVo> volist = null;
+	public List<BusinessInfoVo> selectList(){
+		List<BusinessInfoVo> volist = null;
 		Connection conn = JdbcTemplate.getConnection();
 		volist = dao.selectList(conn);
 		JdbcTemplate.close(conn);
 		return volist;
 	}
 //	selectOne - 상세조회
-	public MemberVo selectOne(String mid/*주로 PK*/){
-		MemberVo vo = null;
+	public BusinessInfoVo selectOne(String busno/*주로 PK*/){
+		BusinessInfoVo vo = null;
 		Connection conn = JdbcTemplate.getConnection();
-		vo = dao.selectOne(conn, mid);
+		vo = dao.selectOne(conn, busno);
 		JdbcTemplate.close(conn);
 		return vo;
 	}

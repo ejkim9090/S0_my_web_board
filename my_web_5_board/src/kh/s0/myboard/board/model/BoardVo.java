@@ -32,7 +32,9 @@ public class BoardVo {
 	
 // bfile 테이블에 대한 방법 1
 	private List<BoardFileVo> bfilelist;
-
+// bfile 테이블에 대한 방법 2
+//		private List<String> bfilepathlist;
+	
 	@Override
 	public String toString() {
 		return "BoardVo [bno=" + bno + ", btitle=" + btitle + ", bcontent=" + bcontent + ", bdate=" + bdate + ", bcnt="
@@ -128,8 +130,6 @@ public class BoardVo {
 		this.bfilelist = bfilelist;
 	}
 	
-// bfile 테이블에 대한 방법 2
-//	private List<String> bfilepathlist;
 	
 	
 	
