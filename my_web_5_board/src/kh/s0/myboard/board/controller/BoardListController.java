@@ -43,9 +43,8 @@ public class BoardListController extends HttpServlet {
 		List<MemberVo> memberlist = service2.selectList();
 		request.setAttribute("bbb", "일단 아무거나");
 		
-		request.setAttribute("aaa", volist);
-		String viewPath = "/WEB-INF/view/boardlist.jsp";  //TODO
-		
+		request.setAttribute("aaa", volist);  // 데이터 전달 - forward에만 가능함
+		String viewPath = "/WEB-INF/view/boardlist.jsp";  // contextPath 없이 경로 작성되어야 함.
 		request.getRequestDispatcher(viewPath).forward(request, response);
 		
 		
@@ -58,9 +57,9 @@ public class BoardListController extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-//	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		// TODO Auto-generated method stub
-//		doGet(request, response);
-//	}
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+	}
 
 }

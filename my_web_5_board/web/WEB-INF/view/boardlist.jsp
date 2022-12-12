@@ -23,6 +23,11 @@
 
 	<h1>게시글목록</h1>
 <%
+//학습용 코드
+//out.append("aaa"); //response.getWriter();  // JSP out객체
+//session.getAttribute("aaaa"); //request.getSession();  // JSP session객체
+//session.invalidate();
+
 // 스크립틀릿
 // java 문법 그대로 사용 가능한 영역
 	//String bbb = (String)request.getAttribute("bbb");

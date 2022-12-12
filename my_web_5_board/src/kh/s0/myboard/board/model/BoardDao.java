@@ -35,12 +35,13 @@ public class BoardDao {
 //		    'EJKIM', 'A')
 //		;
 		String sql = "INSERT INTO BOARD (BNO, BTITLE, BCONTENT, BREF, BRELEVEL, BRESTEP, BWRITER, BTYPE)";
-		sql += "VALUES ((SELECT NVL(MAX(BNO),0)+1 FROM BOARD), ?,?, (SELECT NVL(MAX(BNO),0)+1 FROM BOARD), 0, 1, 'EJKIM', 'A')";
+		sql += "VALUES ((SELECT NVL(MAX(BNO),0)+1 FROM BOARD), ?,?, (SELECT NVL(MAX(BNO),0)+1 FROM BOARD), 0, 1, ?, 'A')";
 		PreparedStatement pstmt = null;
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, vo.getBtitle());
 			pstmt.setString(2, vo.getBcontent());
+			pstmt.setString(3, vo.getBwriter());
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -131,7 +132,7 @@ public class BoardDao {
 	}
 //	selectOne - 상세조회
 	public BoardVo selectOne(Connection conn, int bno/*주로 PK*/){
-		BoardVo vo = null;
+		BoardVo result = null;
 		String sql = "select * from board where bno=?";
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -140,17 +141,17 @@ public class BoardDao {
 			pstmt.setInt(1, bno);
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
-				vo = new BoardVo();
-				vo.setBcnt(rs.getInt("bcnt"));
-				vo.setBcontent(rs.getString("bcontent"));
-				vo.setBdate(rs.getTimestamp("bdate"));
-				vo.setBno(rs.getInt("bno"));
-				vo.setBref(rs.getInt("bref"));
-				vo.setBrelevel(rs.getInt("brelevel"));
-				vo.setBrestep(rs.getInt("brestep"));
-				vo.setBtitle(rs.getString("btitle"));
-				vo.setBtype(rs.getString("btype"));
-				vo.setBwriter(rs.getString("bwriter"));
+				result = new BoardVo();
+				result.setBcnt(rs.getInt("bcnt"));
+				result.setBcontent(rs.getString("bcontent"));
+				result.setBdate(rs.getTimestamp("bdate"));
+				result.setBno(rs.getInt("bno"));
+				result.setBref(rs.getInt("bref"));
+				result.setBrelevel(rs.getInt("brelevel"));
+				result.setBrestep(rs.getInt("brestep"));
+				result.setBtitle(rs.getString("btitle"));
+				result.setBtype(rs.getString("btype"));
+				result.setBwriter(rs.getString("bwriter"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -158,7 +159,7 @@ public class BoardDao {
 			JdbcTemplate.close(rs);
 			JdbcTemplate.close(pstmt);
 		}
-		return vo;
+		return result;
 	}
 
 }

@@ -31,6 +31,23 @@ public class BoardWriteController extends HttpServlet {
 		//view /url변화
 		String viewPath = "/WEB-INF/view/boardwrite.jsp";
 		request.getRequestDispatcher(viewPath).forward(request, response);
+		
+		
+		
+		
+//		학습용 코드
+//		response.getWriter();  // JSP out객체
+//		request.getSession();  // JSP session객체
+//		request.getSession().invalidate();
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	}
 
 	/**

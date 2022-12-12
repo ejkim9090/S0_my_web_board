@@ -47,4 +47,34 @@ public class MemberService {
 		JdbcTemplate.close(conn);
 		return vo;
 	}
+// selectOne-Login 상세조회
+	public MemberVo login(String mid, String mpwd){
+		MemberVo vo = null;
+		Connection conn = JdbcTemplate.getConnection();
+		vo = dao.login(conn, mid, mpwd);
+		JdbcTemplate.close(conn);
+		return vo;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
