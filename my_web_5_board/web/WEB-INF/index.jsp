@@ -22,7 +22,24 @@ MemberVo loginSsInfo = (MemberVo)request.getSession().getAttribute("loginSsInfo"
 <%
 if(loginSsInfo == null){
 %>
-	<button class="btn login">로그인</button>
+	<button class="btn login">그냥로그인</button>
+	
+	<div class="wrap_login">
+	<%-- <form action="<%=request.getContextPath() %>/login.do" method="post"> --%>
+		<fieldset>
+			<legend>로그인</legend>
+			id: <input type="text" name="mid" id="mid">
+			<br>
+			pwd: <input type="password" name="mpwd" id="mpwd">
+			<br>
+			<button type="button" class="btn loginajax">ajax로그인</button>
+		</fieldset>
+	<!-- </form> -->
+	</div>
+	<div class="wrap_logout" style="display:none;">
+		<button class="btn mypage">페이지</button>
+		<button class="btn logout">로그아웃</button>
+	</div>
 <%
 } else {
 %>
@@ -32,16 +49,41 @@ if(loginSsInfo == null){
 }
 %>
 
-<img src="">
 
 
 <script>
 $(function(){
 	$(".btn.board").on("click", BoardClickHandler);
 	$(".btn.login").on("click", LoginClickHandler);
+	$(".btn.loginajax").on("click", LoginajaxClickHandler);
 	$(".btn.mypage").on("click", MyPageClickHandler);
 	$(".btn.logout").on("click", LogoutClickHandler);
 });
+function LoginajaxClickHandler(){
+	console.log("LoginajaxClickHandler");
+	$.ajax({
+		url:"<%=request.getContextPath() %>/login.lo",
+		type:"post",
+		data:{
+			mid2: $("#mid").val() ,
+			mpwd2: $("#mpwd").val() 
+			},  // url로 전달할 데이터, object 
+		
+		// success의 콜백함수의 매개변수로 들어오는 값은 url에서 전달해준 값이 들어있음. responsevalue
+		success: function( responsevalue ){  
+			console.log(responsevalue); 
+			if(responsevalue == "OK"){
+				$(".wrap_login").hide();
+				$(".wrap_logout").show();
+			}
+		},   
+		// error의 콜백함수의 매개변수로 들어오는 값은 url에서 전달 그리고 응답과정에서 발생하는 오류내용
+		error:function( e ){
+			console.log(e.resonseText);
+		}
+	});
+}
+
 function BoardClickHandler(){
 	console.log("BoardClickHandler");
 	location.href = "<%=request.getContextPath()%>/board/list";
