@@ -1,15 +1,24 @@
 <%@page import="kh.s0.myboard.member.model.MemberVo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%-- <%@ page errorPage="./view/error/alert.jsp" %> --%>
+<%! int maxCnt = 5000; %>
+<% String ctxPath = request.getContextPath(); %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>나의 계층형 게시판 메인페이지</title>
 <link href="<%=request.getContextPath()%>/css/reset.css" rel="stylesheet">
-<script src="<%=request.getContextPath()%>/js/jquery-3.6.1.js"></script>
+<link href="<%=request.getContextPath()%>/css/header.css" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/css/footer.css" rel="stylesheet">
+<script src="<%=ctxPath%>/js/jquery-3.6.1.js"></script>
 </head>
 <body>
+
+<%@ include file="/WEB-INF/view/boardwrite.jsp" %>
+
+
 <%
 //스크립틀릿
 MemberVo loginSsInfo = (MemberVo)request.getSession().getAttribute("loginSsInfo");
@@ -52,7 +61,10 @@ if(loginSsInfo == null){
 }
 %>
 
+<%@ include file="/WEB-INF/view/boardwrite.jsp" %>
+<jsp:include page="/WEB-INF/view/boardwrite.jsp"></jsp:include>
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/fN5mSW5RurU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 <script>
 $(function(){
@@ -78,7 +90,7 @@ function LoginajaxClickHandler(){
 	console.log(JSON.stringify(deleteList));
 	
 	$.ajax({
-		url:"<%=request.getContextPath() %>/login.lo",
+		url:"<%=ctxPath%>/login.lo",
 		type:"post",
 		contentType:"application/json",
 		data: 
