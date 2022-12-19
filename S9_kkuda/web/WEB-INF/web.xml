@@ -4,4 +4,25 @@
   <welcome-file-list>
     <welcome-file>/WEB-INF/view/index.jsp</welcome-file>
   </welcome-file-list>
+	<servlet-mapping>
+		<servlet-name>statContent</servlet-name>
+		<url-pattern>*.js</url-pattern>
+		<url-pattern>*.css</url-pattern>
+		<url-pattern>*.jpg</url-pattern>
+		<url-pattern>*.png</url-pattern>
+		<url-pattern>*.ico</url-pattern>
+		<url-pattern>*.swf</url-pattern>
+		<url-pattern>*.gif</url-pattern>
+		<url-pattern>*.avif</url-pattern>
+		<url-pattern>*.svg</url-pattern>
+		<url-pattern>*.webp</url-pattern>
+	</servlet-mapping>
+	<filter>
+		<filter-name>EncodingFilter</filter-name>
+		<filter-class>common.filter.EncodingFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>EncodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
 </web-app>
