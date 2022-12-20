@@ -17,6 +17,7 @@
 		<url-pattern>*.svg</url-pattern>
 		<url-pattern>*.webp</url-pattern>
 	</servlet-mapping>
+	 -->
 	<filter>
 		<filter-name>EncodingFilter</filter-name>
 		<filter-class>common.filter.EncodingFilter</filter-class>
@@ -24,5 +25,5 @@
 	<filter-mapping>
 		<filter-name>EncodingFilter</filter-name>
 		<url-pattern>/*</url-pattern>
-	</filter-mapping> -->
+	</filter-mapping>
 </web-app>
