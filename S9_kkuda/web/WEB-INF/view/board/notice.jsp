@@ -70,7 +70,7 @@
                                 <span class="notice_header_text_2">컬리의 새로운 소식들과 유용한 정보들을 한곳에서 확인하세요.</span>
                                 <input type="search" id="searchword" value="${searchword }">
                                 <button type="button" onclick="location.href='notice?search='+$('#searchword').val();">검색</button>
-                                <button  type="button">글쓰기</button>
+                                <button  type="button"  onclick="location.href='noticeWrite';">글쓰기</button>
                             </div>
                         </div>
 <c:choose>
