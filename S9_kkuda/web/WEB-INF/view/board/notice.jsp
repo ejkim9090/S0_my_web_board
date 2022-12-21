@@ -68,6 +68,9 @@
                             <div class="notice_header_text_wrapper"> <!-- flex -->
                                 <h2 class="notice_header_text_1">공지사항</h2>
                                 <span class="notice_header_text_2">컬리의 새로운 소식들과 유용한 정보들을 한곳에서 확인하세요.</span>
+                                <input type="search" id="searchword" value="${searchword }">
+                                <button type="button" onclick="location.href='notice?search='+$('#searchword').val();">검색</button>
+                                <button  type="button">글쓰기</button>
                             </div>
                         </div>
 <c:choose>
@@ -85,10 +88,14 @@
                         </div>
 						<ul class="notice_post_wrapper"> <!-- flex -->
 		<c:forEach items="${boardlist}" var="board">
-                            <li><a href="#">
+                            <li><a href="noticeRead?bno=${board.bno }">
                                     <div class="post_wrapper"> <!-- flex -->
                                         <div class="post_number">${board.bno }</div>
-                                        <div class="post_title">${board.btitle }</div>
+                                        <div class="post_title">
+                                        <c:forEach begin="1" end="${board.brelevel }">
+                                        &#128761;
+                                        </c:forEach>
+                                        ${board.btitle }</div>
                                         <div class="post_writer">${board.bwriter }</div>
                                         <div class="post_date">${board.bdate }</div>
                                     </div>
@@ -101,13 +108,13 @@
                                     <div class="button_text">이전</div>
                                 </button>
 <c:if test="${startPage ne 1}">
-	<a href="notice?pagenum=${startPage-1 }">이전</a>
+	<a href="notice?pagenum=${startPage-1 }&search=${searchword}">이전</a>
 </c:if>
 <c:forEach begin="${startPage }" end="${endPage }" var="p" step="1">
-								<a href="notice?pagenum=${p }">${p }</a>
+								<a href="notice?pagenum=${p }&search=${searchword}">${p }</a>
 </c:forEach>
 <c:if test="${endPage < pageCnt}">
-	<a href="notice?pagenum=${endPage+1 }">다음</a>
+	<a href="notice?pagenum=${endPage+1 }&search=${searchword}">다음</a>
 </c:if>
 
                                 <button type="button" class="button_next">

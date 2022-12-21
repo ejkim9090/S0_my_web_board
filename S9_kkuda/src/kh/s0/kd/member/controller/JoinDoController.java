@@ -40,7 +40,7 @@ public class JoinDoController extends HttpServlet {
 		
 		System.out.println(vo);
 		int result = new MemberService().insert(vo);
-		if (result>0) {
+		if (result > 0) {
 			System.out.println("회원가입 성공");
 			response.sendRedirect(request.getContextPath()+"/login");
 		} else {

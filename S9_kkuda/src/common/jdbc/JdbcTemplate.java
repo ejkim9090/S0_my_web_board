@@ -56,4 +56,9 @@ public class JdbcTemplate {
 			if(conn!=null && !conn.isClosed()) conn.rollback();
 		} catch (Exception e) {			e.printStackTrace();		}
 	}
+	public static void setAutoCommit(Connection conn, boolean autoCommit) {
+		try {
+			if(conn!=null && !conn.isClosed()) conn.setAutoCommit(autoCommit);
+		} catch (Exception e) {			e.printStackTrace();		}
+	}
 }

@@ -12,11 +12,24 @@ public class BoardService {
 //	insert
 	public int insert(BoardVo vo) {
 		System.out.println(">>BoardService Param :"+ vo);
-		int result = 0;
+		int result = 0;  // insert, 0오류, 1정상
+		int result2 = 0;  // update, -1오류, 012..정상
 		Connection conn = JdbcTemplate.getConnection();
-		
-		result = dao.insert(conn, vo);
-		
+		JdbcTemplate.setAutoCommit(conn, false);
+		if(vo.getBno() != 0) {
+			//답글
+			result2 = dao.updateForInsert(conn, vo);
+			if(result2 >= 0)
+				result = dao.insert(conn, vo);
+		}else {
+			// 원본글
+			result = dao.insert(conn, vo);
+		}
+		if(result > 0) {
+			JdbcTemplate.commit(conn);
+		}else {
+			JdbcTemplate.rollback(conn);
+		}
 		JdbcTemplate.close(conn);
 		System.out.println(">>BoardService Return:"+ result);
 		return result;
@@ -52,11 +65,11 @@ public class BoardService {
 		return volist;
 	}
 //	selectList - overloading
-	public List<BoardVo> selectList(int startRnum, int endRnum){
+	public List<BoardVo> selectList(int startRnum, int endRnum, String searchword){
 		List<BoardVo> volist = null;
 		Connection conn = JdbcTemplate.getConnection();
 	
-		volist = dao.selectList(conn, startRnum, endRnum);
+		volist = dao.selectList(conn, startRnum, endRnum, searchword);
 		
 		JdbcTemplate.close(conn);
 		return volist;
@@ -81,7 +94,15 @@ public class BoardService {
 		JdbcTemplate.close(conn);
 		return result;
 	}
-
+	public int selectTotalCnt(String search){
+		int result = 0;
+		Connection conn = JdbcTemplate.getConnection();
+	
+		result = dao.selectTotalCnt(conn, search);
+		
+		JdbcTemplate.close(conn);
+		return result;
+	}
 
 
 

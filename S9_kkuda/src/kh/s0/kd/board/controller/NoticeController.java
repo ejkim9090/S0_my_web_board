@@ -31,7 +31,7 @@ public class NoticeController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		BoardService service = new BoardService();
-		final int pageSize = 2; // 페이지당글수 2
+		final int pageSize = 10; // 페이지당글수 2
 		final int pageBlock = 3; // 페이지링크수 3 예)게시글하단에  1 2 3 >>  << 4 5 6 >>  << 7 8
 		int cnt = 0;  // 총글수 DB에서 확인하기
 		int pageCnt = 0; // 총페이지수 위 pageSize와 cnt 방정식으로 계산
@@ -39,9 +39,14 @@ public class NoticeController extends HttpServlet {
 		int startPage = 1;
 		int endPage = 1;
 		
-		// TODO DB select
+		String searchword = request.getParameter("search");
+		
 		try {
-			cnt = service.selectTotalCnt();
+			if(searchword != null && !searchword.equals("")) {
+				cnt = service.selectTotalCnt(searchword);
+			} else {
+				cnt = service.selectTotalCnt();
+			}
 			if(cnt <1) {  // 게시글 없음으로 아래 게시글 selectList 할 필요 없음.
 				return;
 			}
@@ -66,9 +71,12 @@ public class NoticeController extends HttpServlet {
 				endRnum = cnt;
 			}
 			
-			List<BoardVo> boardlist = new BoardService().selectList(startRnum, endRnum);
+			List<BoardVo> boardlist = new BoardService().selectList(startRnum, endRnum, searchword);
 			request.setAttribute("boardlist", boardlist);
 		} finally {
+			if(searchword != null && !searchword.equals("")) {
+				request.setAttribute("searchword", searchword);
+			}
 			request.setAttribute("pageCnt", pageCnt);
 			request.setAttribute("startPage", startPage);
 			request.setAttribute("endPage", endPage);

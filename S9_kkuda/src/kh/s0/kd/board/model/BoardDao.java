@@ -38,23 +38,74 @@ public class BoardDao {
 //		    'EJKIM', 'A')
 //		;
 		String sql = "INSERT INTO BOARD (BNO, BTITLE, BCONTENT, BREF, BRELEVEL, BRESTEP, BWRITER, BTYPE)";
-		sql += "VALUES ((SELECT NVL(MAX(BNO),0)+1 FROM BOARD), ?,?, (SELECT NVL(MAX(BNO),0)+1 FROM BOARD), 0, 1, ?, 'A')";
+		sql += "VALUES ((SELECT NVL(MAX(BNO),0)+1 FROM BOARD), ?,?, "
+				+ " (SELECT NVL(MAX(BNO),0)+1 FROM BOARD), 0, 1, "
+				+ " ?, 'A')";
+		
+		String sqlReply = "INSERT INTO BOARD (BNO, BTITLE, BCONTENT, BREF, BRELEVEL, BRESTEP, BWRITER, BTYPE)";
+		sqlReply += " VALUES ((SELECT NVL(MAX(BNO),0)+1 FROM BOARD), ?, ?, ";
+		sqlReply += " (SELECT BREF FROM BOARD WHERE BNO=?), ";
+		sqlReply += " (SELECT BRELEVEL FROM BOARD WHERE BNO=?)+1, ";
+		sqlReply += " (SELECT BRESTEP FROM BOARD WHERE BNO=?)+1, ";
+		sqlReply += " ?, 'A') ";
+		
 		PreparedStatement pstmt = null;
 		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, vo.getBtitle());
-			pstmt.setString(2, vo.getBcontent());
-			pstmt.setString(3, vo.getBwriter());
+			if(vo.getBno()==0) {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, vo.getBtitle());
+				pstmt.setString(2, vo.getBcontent());
+				pstmt.setString(3, vo.getBwriter());
+			} else {
+				pstmt = conn.prepareStatement(sqlReply);
+				pstmt.setString(1, vo.getBtitle());
+				pstmt.setString(2, vo.getBcontent());
+				pstmt.setInt(3, vo.getBno());
+				pstmt.setInt(4, vo.getBno());
+				pstmt.setInt(5, vo.getBno());
+				pstmt.setString(6, vo.getBwriter());
+			}
+			
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			JdbcTemplate.close(pstmt);
 		}
-		
-		
-		
 		System.out.println(">>>>BoardDao Return:"+ result);
+		return result;
+	}
+	public int updateForInsert(Connection conn, BoardVo vo) {
+		System.out.println(">>>>BoardDao Param :"+ vo);
+		int result = -1;  // 오류발생시 -1, 정상 update 경우 0이상의 수
+		
+//		-- 답글 : 경우는 INSERT 전에 UPDATE 먼저 수행하여 STEP 수정을 함.
+//		UPDATE BOARD SET BRESTEP = BRESTEP+1 
+//		WHERE BREF = (SELECT BREF FROM BOARD WHERE BNO='&답글번호')
+//		AND BRESTEP > (SELECT BRESTEP FROM BOARD WHERE BNO='&답글번호')
+//		;
+//		INSERT INTO BOARD (BNO, BTITLE, BCONTENT, BREF, BRELEVEL, BRESTEP, BWRITER, BTYPE)
+//		VALUES ((SELECT NVL(MAX(BNO),0)+1 FROM BOARD), '&NUMBER TITLE','CONTENT', 
+//		    (SELECT BREF FROM BOARD WHERE BNO='&답글번호'), 
+//		    (SELECT BRELEVEL FROM BOARD WHERE BNO='&답글번호')+1, 
+//		    (SELECT BRESTEP FROM BOARD WHERE BNO='&답글번호')+1,
+//		    'EJKIM', 'A')
+//		;
+		String sqlUpdate = "UPDATE BOARD SET BRESTEP = BRESTEP+1 ";
+		sqlUpdate += " WHERE BREF = (SELECT BREF FROM BOARD WHERE BNO=?) ";
+		sqlUpdate += " AND BRESTEP > (SELECT BRESTEP FROM BOARD WHERE BNO=?) ";
+		
+		PreparedStatement pstmt = null;
+		try {
+			pstmt = conn.prepareStatement(sqlUpdate);
+			pstmt.setInt(1, vo.getBno());
+			pstmt.setInt(2, vo.getBno());
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JdbcTemplate.close(pstmt);
+		}
 		return result;
 	}
 //	update - 수정
@@ -135,17 +186,31 @@ public class BoardDao {
 	}
 	
 //	selectList  - 목록조회 페이징 - overloading 
-	public List<BoardVo> selectList(Connection conn, int startRnum, int endRnum){
+	public List<BoardVo> selectList(Connection conn, int startRnum, int endRnum, String searchword){
 		List<BoardVo> volist = null;
 		
-		String sql = "select * from (select t1.*, rownum r from (select * from board order by bdate desc) t1 ) t2 "
+		String sql = "select * from (select t1.*, rownum r from "
+				+ " (select * from board ORDER BY BREF DESC, BRESTEP ASC ) t1 ) t2 "
+				+ " where r between ? and ?";
+		String sqlSearch = "select * from (select t1.*, rownum r from "
+				+ " (select * from board where btitle LIKE ? or bcontent LIKE ? or bwriter LIKE ? ORDER BY BREF DESC, BRESTEP ASC ) t1 ) t2 "
 				+ " where r between ? and ?";
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, startRnum);
-			pstmt.setInt(2, endRnum);
+			if(searchword != null && !searchword.equals("")) {
+				pstmt = conn.prepareStatement(sqlSearch);
+				pstmt.setInt(4, startRnum);
+				pstmt.setInt(5, endRnum);
+				searchword = "%"+searchword+"%";   // LIKE 형식
+				pstmt.setString(1, searchword);
+				pstmt.setString(2, searchword);
+				pstmt.setString(3, searchword);
+			}else {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, startRnum);
+				pstmt.setInt(2, endRnum);
+			}
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
 				volist = new ArrayList<BoardVo>();
@@ -226,7 +291,31 @@ public class BoardDao {
 		}
 		return result;
 	}
-	
+//	selectTotalCnt  --overloading
+	public int selectTotalCnt(Connection conn, String searchword){
+		int result = 0;
+
+		String sql = "select count(*) cnt from board where btitle LIKE ? or bcontent LIKE ? or bwriter LIKE ?";
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			searchword = "%"+searchword+"%";   // LIKE 형식
+			pstmt.setString(1, searchword);
+			pstmt.setString(2, searchword);
+			pstmt.setString(3, searchword);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				result = rs.getInt("cnt");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			JdbcTemplate.close(rs);
+			JdbcTemplate.close(pstmt);
+		}
+		return result;
+	}
 	
 	
 	
