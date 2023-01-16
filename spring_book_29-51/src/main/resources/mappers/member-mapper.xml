@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="Member">
+
+<resultMap type="Member" id="resultMember">
+	<id column="ID" property="id"/>
+	<result column="PASSWD" property="passwd"/>
+	<result column="NAME" property="name"/>
+	<result column="EMAIL" property="email"/>
+	<result column="GENDER" property="gender"/>
+	<result column="AGE" property="age"/>
+	<result column="PHONE" property="phone"/>
+	<result column="ADDRESS" property="address"/>
+	<result column="ENROLL_DATE" property="enrollDate"/>
+</resultMap>
+
+<insert id="insertMember" parameterType="Member" statementType="PREPARED">
+	insert into member values (#{id}, #{passwd}, #{name}, #{email}, #{gender}, #{age}, #{phone}, #{address}, default)
+</insert>
+
+<select id="memberInfo" parameterType="string" resultMap="resultMember">
+	select * from member where id=#{user}
+</select>
+
+<select id="loginCheck" parameterType="Member" resultMap="resultMember">
+	select * from member where ID=#{id} and PASSWD=#{passwd}
+</select>
+
+</mapper>
