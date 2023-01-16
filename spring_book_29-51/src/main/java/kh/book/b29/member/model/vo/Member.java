@@ -3,6 +3,10 @@ package kh.book.b29.member.model.vo;
 import java.io.Serializable;
 import java.sql.Date;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.ToString;
+
 public class Member implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private String id;

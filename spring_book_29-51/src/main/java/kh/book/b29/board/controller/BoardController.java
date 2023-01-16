@@ -1,10 +1,12 @@
 package kh.book.b29.board.controller;
 
 import java.sql.SQLException;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,10 +22,18 @@ import kh.book.b29.board.model.vo.Board;
 public class BoardController {
 	@Autowired
 	private BoardService service;
+	
+	@GetMapping
+	public ModelAndView board(ModelAndView mv
+			) throws Exception {
+		mv.addObject("boardlist", service.selectListBoard());
+		mv.setViewName("/board/list");
+		return mv;
+	}
 
-	@GetMapping("/insert")
-	public String insert() {
-		return "/board/insert";
+	@GetMapping("/insert.abc")
+	public void insert() {
+		return;
 	}
 	
 	@PostMapping("/insert")
@@ -32,6 +42,7 @@ public class BoardController {
 		
 		return "redirect:/board/list";
 	}
+	
 	@GetMapping("/list")
 	public ModelAndView list(ModelAndView mv
 			, @RequestParam(name = "page", defaultValue = "1") String currentPageNumStr
