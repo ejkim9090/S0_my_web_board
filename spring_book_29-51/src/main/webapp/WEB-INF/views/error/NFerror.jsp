@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>500 Error</title>
+<title>Insert title here</title>
 </head>
 <body>
 <script>
@@ -12,7 +12,7 @@
 	if(msg){
 		alert(msg);
 	}
-	location.href = "<%=request.getContextPath()%>/"
+	location.href = "<%=request.getContextPath()%>/board/list"
 </script>
 </body>
 </html>

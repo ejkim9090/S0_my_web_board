@@ -1,6 +1,9 @@
 package kh.book.b29.board.controller;
 
+import java.sql.SQLException;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,7 +27,7 @@ public class BoardController {
 	}
 	
 	@PostMapping("/insert")
-	public String insert(Board bvo) {
+	public String insert(Board bvo)  throws Exception {
 		int result = service.insertBoard(bvo);
 		
 		return "redirect:/board/list";
@@ -34,12 +37,30 @@ public class BoardController {
 			, @RequestParam(name = "page", defaultValue = "1") String currentPageNumStr
 			) throws Exception {
 		int currentPageNum = Integer.parseInt(currentPageNumStr);
-		mv.addObject("boardlist", service.selectListBoard(currentPageNum));
+		int limits = 3;
+		mv.addObject("boardlist", service.selectListBoard(currentPageNum, limits));
 		mv.setViewName("/board/list");
 		return mv;
 	}
 	
-	@ExceptionHandler
+	
+	@ExceptionHandler(NumberFormatException.class)
+	public ModelAndView handlerBoardNumberFormatException(NumberFormatException e/* 오류발생 ,ModelAndView mv  */) {
+		ModelAndView mv = new ModelAndView(); 
+		mv.addObject("errMsg", "숫자만입력해야합니다.");
+		mv.setViewName("/error/NFerror");
+		return mv;
+	}
+	@ExceptionHandler(DataIntegrityViolationException.class)
+	public ModelAndView handlerBoardSQLException(DataIntegrityViolationException e/* 오류발생 ,ModelAndView mv  */) {
+		ModelAndView mv = new ModelAndView(); 
+		mv.addObject("errMsg", "올바르지 않은 데이터로 전송에 실패했습니다.");
+		mv.setViewName("/error/NFerror");
+		return mv;
+	}
+	
+//	@ExceptionHandler
+	@ExceptionHandler(Exception.class)
 	public ModelAndView handlerBoardException(Exception e/* 오류발생 ,ModelAndView mv  */) {
 		ModelAndView mv = new ModelAndView(); 
 		mv.addObject("errMsg", e.getMessage());
