@@ -8,11 +8,14 @@ import org.springframework.stereotype.Service;
 
 import kh.book.b29.board.model.dao.BoardDao;
 import kh.book.b29.board.model.vo.Board;
+import kh.book.b29.member.model.dao.MemberDao;
 
 @Service
 public class BoardServiceImpl implements BoardService {
 	@Autowired
 	private BoardDao dao;
+	@Autowired
+	private MemberDao mDao;
 	
 	@Override
 	public int insertBoard(Board vo) throws Exception {
@@ -21,7 +24,8 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public int updateBoard(Board vo)  throws Exception {
-		// TODO Auto-generated method stub
+		insertBoard(vo);
+		deleteBoard(20);
 		return 0;
 	}
 
@@ -56,6 +60,12 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public int selectBoardCount() throws Exception {
 		return dao.selectBoardCount();
+	}
+
+	@Override
+	public int selectBoardCount2() throws Exception {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

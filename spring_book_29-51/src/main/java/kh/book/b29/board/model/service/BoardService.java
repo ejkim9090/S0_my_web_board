@@ -14,4 +14,5 @@ public interface BoardService {
 	public List<Board> selectListBoard(int currentPageNum, int limits) throws Exception;
 	public List<Board> selectListBoard(int currentPageNum, int limits, String searchWord)  throws Exception;
 	public int selectBoardCount()  throws Exception;
+	public int selectBoardCount2()  throws Exception;
 }
