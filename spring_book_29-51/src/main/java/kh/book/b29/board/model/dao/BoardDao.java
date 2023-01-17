@@ -23,8 +23,8 @@ public class BoardDao {
 		return sqlsession.selectList("Board.selectBoardList");
 	}
 	public List<Board> selectListBoard(int  currentPageNum, int limits) throws Exception {
-		RowBounds rb = new RowBounds((currentPageNum-1)*limits, limits);
-		return sqlsession.selectList("Board.selectBoardList", null, rb);
+//		RowBounds rb = new RowBounds((currentPageNum-1)*limits, limits);
+		return sqlsession.selectList("Board.selectBoardList", null, new RowBounds((currentPageNum-1)*limits, limits));
 	}
 	
 	public int selectBoardCount() {
