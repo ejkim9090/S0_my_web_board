@@ -10,7 +10,7 @@ import kh.book.b29.member.model.vo.Member;
 @Service
 public class MemberServiceImpl implements MemberService {
 	@Autowired
-	private MemberDao dao;
+	private MemberDao mDao;
 
 	public int sum () {
 		return 100;
@@ -18,7 +18,7 @@ public class MemberServiceImpl implements MemberService {
 	
 	@Override
 	public int insertMember(Member vo) {
-		return dao.insertMember(vo);
+		return mDao.insertMember(vo);
 	}
 
 	@Override
@@ -35,12 +35,12 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public Member selectMember(Member vo) {
-		return dao.selectMember(vo);
+		return mDao.selectMember(vo);
 	}
 
 	@Override
 	public Member checkIdDup(String id) {
-		return dao.checkIdDup(id);
+		return mDao.checkIdDup(id);
 	}
 	
 	
