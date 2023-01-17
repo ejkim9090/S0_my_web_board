@@ -1,12 +1,9 @@
 package kh.book.b29.board.controller;
 
-import java.sql.SQLException;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -58,8 +55,9 @@ public class BoardController {
 	@ExceptionHandler(NumberFormatException.class)
 	public ModelAndView handlerBoardNumberFormatException(NumberFormatException e/* 오류발생 ,ModelAndView mv  */) {
 		ModelAndView mv = new ModelAndView(); 
-		mv.addObject("errMsg", "숫자만입력해야합니다.");
-		mv.setViewName("/error/NFerror");
+//		mv.addObject("errMsg", "숫자만입력해야합니다.");
+//		mv.setViewName("/error/NFerror");
+		mv.setViewName("redirect:/board");
 		return mv;
 	}
 	@ExceptionHandler(DataIntegrityViolationException.class)
