@@ -58,6 +58,7 @@ public class MemberController {
 	}
 	@GetMapping("/login")
 	public String login() {
+//		return "member_c";  // mapping 형태 ViewResolver 사용에 대한 예
 		return "/member/login";
 	}
 }
