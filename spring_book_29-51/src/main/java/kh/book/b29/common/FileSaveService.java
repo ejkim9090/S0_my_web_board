@@ -28,7 +28,8 @@ public class FileSaveService {
 	public static String FILE_BOARD_PATH = "/resources/board/";
 	public static String FILE_PROFILE_PATH = "/resources/profile/";
 
-
+	@Autowired
+	private Cloudinary cloudinary;
 
 	// MultipartFile 형태에서 file을 file Server/web Server 어딘가에 저장하고 저장한 file의 이름을 return 하도록 함.
 	public String saveFile(MultipartFile multipartFile
@@ -74,6 +75,22 @@ public class FileSaveService {
 			e.printStackTrace();
 		}
 		
+		// cloudinaly에 저장
+		@SuppressWarnings("rawtypes")
+		Map uploadoption = null;
+		@SuppressWarnings("rawtypes")
+		Map uploadresult = null;
+        try {
+        	uploadoption = ObjectUtils.asMap(
+        			"folder", "test/",
+        			"use_filename", true,
+        			"unique_filename", false,
+        			"overwrite", true
+        			);
+        	uploadresult = cloudinary.uploader().upload(newFile, uploadoption); //파일 업로드
+        } catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		
 		return savedFileName;
