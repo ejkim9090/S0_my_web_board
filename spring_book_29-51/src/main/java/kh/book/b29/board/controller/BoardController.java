@@ -1,7 +1,12 @@
 package kh.book.b29.board.controller;
 
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -9,17 +14,20 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import kh.book.b29.board.model.service.BoardService;
 import kh.book.b29.board.model.vo.Board;
+import kh.book.b29.common.FileSaveService;
 
 @Controller
 @RequestMapping("/board")
 public class BoardController {
 	@Autowired
 	private BoardService service;
-	
+	@Autowired
+	private FileSaveService fileSaveService;
 	@GetMapping
 	public ModelAndView board(ModelAndView mv
 			) throws Exception {
@@ -28,17 +36,51 @@ public class BoardController {
 		return mv;
 	}
 
-	@GetMapping("/insert.abc")
+	@GetMapping("/insert")
 	public void insert() {
 		return;
 	}
 	
+	
+	
+	
 	@PostMapping("/insert")
-	public String insert(Board bvo)  throws Exception {
-		int result = service.insertBoard(bvo);
+	public String insert(Board bvo
+// 오류 name 없다면 오류			, @RequestParam(name="abc") String abc
+			, @RequestParam(name="abc", required = false) String abc
+			, @RequestParam(name="report",required = false) MultipartFile multipartFile
+			, HttpServletRequest request
+			)  throws Exception {
 		
-		return "redirect:/board/list";
+		String savedFileName = fileSaveService.saveFile(multipartFile, FileSaveService.FILE_BOARD_PATH, request);
+		bvo.setBoardRenameFileName(FileSaveService.FILE_BOARD_PATH+savedFileName);
+		bvo.setBoardOriginalFileName(FileSaveService.FILE_BOARD_PATH+multipartFile.getOriginalFilename());
+		int result = service.insertBoard(bvo);
+		return "redirect:/board";
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	@GetMapping("/list")
 	public ModelAndView list(ModelAndView mv

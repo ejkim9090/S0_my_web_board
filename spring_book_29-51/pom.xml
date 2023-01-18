@@ -172,7 +172,38 @@
 			<scope>provided</scope>
 		</dependency>
 
+		<!-- File Upload -->
+		<dependency>
+		    <groupId>commons-fileupload</groupId>
+		    <artifactId>commons-fileupload</artifactId>
+		    <version>1.4</version>
+		</dependency>
+		<dependency>
+		    <groupId>commons-io</groupId>
+		    <artifactId>commons-io</artifactId>
+		    <version>2.11.0</version>
+		</dependency>
 
+
+		<!-- cloudinary-core -->
+		<dependency>
+		    <groupId>com.cloudinary</groupId>
+		    <artifactId>cloudinary-core</artifactId>
+		    <version>1.32.2</version>
+		</dependency>
+		
+		<!-- cloudinary-http44 -->
+		<dependency>
+		    <groupId>com.cloudinary</groupId>
+		    <artifactId>cloudinary-http44</artifactId>
+		    <version>1.32.2</version>
+		</dependency>
+		<dependency>
+			<groupId>com.cloudinary</groupId>
+			<artifactId>cloudinary-taglib</artifactId>
+			<version>1.14.0</version>
+		</dependency>
+		
 	</dependencies>
 	<build>
 		<plugins>

@@ -18,8 +18,8 @@
 	<insert id="insertBoard" parameterType="Board">
 		insert 
             into board values (seq_board_num.nextval
-                    ,#{boardTitle}, #{boardWriter}, #{boardContent}
-                    , null, null
+                    , #{boardTitle}, #{boardWriter}, #{boardContent}
+                    , #{boardOriginalFileName}, #{boardRenameFileName}
                     , default, default, seq_board_num.nextval, #{boardReplyRef}, default, default)        
 	</insert>
 	<select id="selectBoardList" resultMap="resultBoard">
