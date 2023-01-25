@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -42,7 +43,6 @@ public class AjaxTest {
 		return "ajaxtest";
 	}
 	
-	// , produces = "text/plain:charset=UTF-8" 은  contentType:"json" 일경우
 	@PostMapping(value="/ajaxResponse")
 	// ajax response 방법 1 - Servlet 방식과 동일
 	public void ajaxResponse_1(HttpServletResponse response
@@ -126,6 +126,27 @@ public class AjaxTest {
 		return new ResponseEntity<String>(new Gson().toJson(map), HttpStatus.OK);
 	}
 	
+	
+	//	@PostMapping(value="/ajaxResponse5", produces = "text/plain; charset=UTF-8")
+	@PostMapping(value="/ajaxResponse5")
+	// ajax response 방법 3
+	@ResponseBody
+	public ResponseEntity<String> ajaxResponse_5(
+			@RequestBody String dataJson
+			, ModelAndView mv
+			) throws Exception{
+		
+		Member vo = new Gson().fromJson(dataJson, Member.class);
+		Member mvo = serviceMember.checkIdDup(vo.getId());
+		List<Board> bvolist = serviceBoard.selectListBoard();
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("memberVo", mvo);
+		map.put("boardList", bvolist);
+		map.put("aaa", 111);
+		map.put("bbb", "추가데이터");
+		
+		return new ResponseEntity<String>(new Gson().toJson(map), HttpStatus.OK);
+	}
 	@ExceptionHandler
 	public ResponseEntity<String> exceptionHandler(Exception e) {
 		e.printStackTrace();
