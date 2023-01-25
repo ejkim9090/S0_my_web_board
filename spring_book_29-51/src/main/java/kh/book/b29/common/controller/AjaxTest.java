@@ -1,7 +1,9 @@
 package kh.book.b29.common.controller;
 
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -45,11 +47,16 @@ public class AjaxTest {
 			) throws Exception{
 		System.out.println("ajaxResponse_1");
 		
-//		Member mvo = serviceMember.checkIdDup(id);
+		Member mvo = serviceMember.checkIdDup(id);
 		List<Board> bvolist = serviceBoard.selectListBoard();
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("memberVo", mvo);
+		map.put("boardList", bvolist);
+		map.put("aaa", 111);
+		map.put("bbb", "추가데이터");
 		
 		PrintWriter out = response.getWriter();
-		out.append(new Gson().toJson(bvolist));
+		out.append(new Gson().toJson(map));
 		out.flush();
 		out.close();
 	}
@@ -63,9 +70,14 @@ public class AjaxTest {
 			) throws Exception{
 		System.out.println("ajaxResponse_2");
 		
-//		Member mvo = serviceMember.checkIdDup(id);
+		Member mvo = serviceMember.checkIdDup(id);
 		List<Board> bvolist = serviceBoard.selectListBoard();
-		return new Gson().toJson(bvolist);		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("memberVo", mvo);
+		map.put("boardList", bvolist);
+		map.put("aaa", 111);
+		map.put("bbb", "추가데이터");
+		return new Gson().toJson(map);		
 	}
 	
 	
