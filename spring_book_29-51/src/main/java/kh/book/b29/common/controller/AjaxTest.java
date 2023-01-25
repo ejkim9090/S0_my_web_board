@@ -8,6 +8,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -101,11 +103,32 @@ public class AjaxTest {
 		mv.setViewName("jsonView");  // ajax로 Json형태로 전달할 수 있도록 bean id jsonView으로 return함
 		return mv;
 	}
-	
+	@RequestMapping("/ajaxResponse4")
+	// ajax response 방법 3
+	@ResponseBody
+	public ResponseEntity<String> ajaxResponse_4(
+			@RequestParam("id") String id
+			, @RequestParam("searchword") String searchword
+			, ModelAndView mv
+			) throws Exception{
+		System.out.println("ajaxResponse_3");
+		
+		Member mvo = serviceMember.checkIdDup(id);
+		List<Board> bvolist = serviceBoard.selectListBoard();
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("memberVo", mvo);
+		map.put("boardList", bvolist);
+		map.put("aaa", 111);
+		map.put("bbb", "추가데이터");
+		
+		return new ResponseEntity<String>(new Gson().toJson(map), HttpStatus.OK);
+	}
 	
 	@ExceptionHandler
-	public void exceptionHandler(Exception e) {
+	public ResponseEntity<String> exceptionHandler(Exception e) {
 		e.printStackTrace();
+		
+		return new ResponseEntity<String>(HttpStatus.NOT_ACCEPTABLE);
 	}
 }
 

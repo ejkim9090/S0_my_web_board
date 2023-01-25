@@ -24,6 +24,7 @@
 <button type="button" onclick="ajaxTest_1(this);">ajax test 1</button>
 <button type="button" onclick="ajaxTest_2(this);">ajax test 2</button>
 <button type="button" onclick="ajaxTest_3(this);">ajax test 3</button>
+<button type="button" onclick="ajaxTest_4(this);">ajax test 4</button>
 <script>
 function ajaxTest_1(thisEle){
 	var dataQuery = $("#frmData").serialize();
@@ -74,7 +75,7 @@ function ajaxTest_3(thisEle){
 		url:"ajaxResponse3"
 		, method:"get"
 		, data: dataQuery
-		//, dataType:"json"
+		, dataType:"json"
 		, success: function(result){
 			console.log(result);
 			//console.log(result.id);
@@ -88,7 +89,26 @@ function ajaxTest_3(thisEle){
 	});
 }
 
-
+function ajaxTest_4(thisEle){
+	var dataQuery = $("#frmData").serialize();
+	console.log(dataQuery);
+	$.ajax({
+		url:"ajaxResponse4"
+		, method:"get"
+		, data: dataQuery
+		, dataType:"json"
+		, success: function(result){
+			console.log(result);
+			//console.log(result.id);
+			
+		}
+		, error: function(request, status, errordata){
+			alert("error code:"+ request.status +"\n" 
+					+"message"+ request.responseText +"\n"
+					+"error"+ errordata +"\n");
+		}
+	});
+}
 
 
 
