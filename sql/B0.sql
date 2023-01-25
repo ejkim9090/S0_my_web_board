@@ -47,6 +47,13 @@ create sequence seq_board_num
 desc board;
 
 insert 
+    into board values (0
+            ,'aaa', 'a' ,'aaa'
+            , null, null
+            , default, default, 0, 0, default, default)        
+;
+
+insert 
     into board values (seq_board_num.nextval
             ,'aaa', 'a' ,'aaa'
             , null, null
