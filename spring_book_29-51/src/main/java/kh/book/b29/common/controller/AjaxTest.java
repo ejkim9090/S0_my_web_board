@@ -1,6 +1,7 @@
 package kh.book.b29.common.controller;
 
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -44,11 +45,11 @@ public class AjaxTest {
 			) throws Exception{
 		System.out.println("ajaxResponse_1");
 		
-		Member mvo = serviceMember.checkIdDup(id);
-//		Board bvo = serviceBoard.selectBoard(1);
+//		Member mvo = serviceMember.checkIdDup(id);
+		List<Board> bvolist = serviceBoard.selectListBoard();
 		
 		PrintWriter out = response.getWriter();
-		out.append(new Gson().toJson(mvo));
+		out.append(new Gson().toJson(bvolist));
 		out.flush();
 		out.close();
 	}
@@ -62,9 +63,9 @@ public class AjaxTest {
 			) throws Exception{
 		System.out.println("ajaxResponse_2");
 		
-		Member mvo = serviceMember.checkIdDup(id);
-		
-		return new Gson().toJson(mvo);		
+//		Member mvo = serviceMember.checkIdDup(id);
+		List<Board> bvolist = serviceBoard.selectListBoard();
+		return new Gson().toJson(bvolist);		
 	}
 	
 	

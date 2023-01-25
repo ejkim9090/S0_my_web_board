@@ -36,11 +36,7 @@ function ajaxTest_1(thisEle){
 		, success: function(result){
 			console.log(result);
 			//console.log(result.id);
-			if(result && result.id){
-				alert("존재하는 id입니다. 다른 id를 작성해주세요.");
-			} else {
-				alert("사용가능id입니다.");
-			}
+			
 		}
 		, error: function(request, status, errordata){
 			alert("error code:"+ request.status +"\n" 
@@ -61,11 +57,7 @@ function ajaxTest_2(thisEle){
 		, success: function(result){
 			console.log(result);
 			//console.log(result.id);
-			if(result && result.id){
-				alert("존재하는 id입니다. 다른 id를 작성해주세요.");
-			} else {
-				alert("사용가능id입니다.");
-			}
+			
 		}
 		, error: function(request, status, errordata){
 			alert("error code:"+ request.status +"\n" 
