@@ -31,7 +31,10 @@ public class BoardController {
 	@GetMapping
 	public ModelAndView board(ModelAndView mv
 			) throws Exception {
+		service.selectBoardCount();
 		mv.addObject("boardlist", service.selectListBoard());
+//		mv.addObject("startPage", 1);
+//		mv.addObject("endPage", 10);
 		mv.setViewName("/board/list");
 		return mv;
 	}
@@ -113,6 +116,7 @@ public class BoardController {
 //	@ExceptionHandler
 	@ExceptionHandler(Exception.class)
 	public ModelAndView handlerBoardException(Exception e/* 오류발생 ,ModelAndView mv  */) {
+		e.printStackTrace();
 		ModelAndView mv = new ModelAndView(); 
 		mv.addObject("errMsg", e.getMessage());
 		mv.setViewName("/error/500error");

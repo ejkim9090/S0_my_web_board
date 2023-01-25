@@ -1,6 +1,7 @@
 package kh.book.b29.board.model.dao;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
@@ -20,6 +21,10 @@ public class BoardDao {
 		return sqlsession.insert("Board.insertBoard", vo);
 	}
 	public List<Board> selectListBoard() throws Exception {
+//		List<Board> list =new ArrayList<Board>();
+//오류발생		Board vo = sqlsession.selectOne("Board.selectBoardList");
+//		list.add(vo);
+//		return list;
 		return sqlsession.selectList("Board.selectBoardList");
 	}
 	public List<Board> selectListBoard(int  currentPageNum, int limits) throws Exception {
