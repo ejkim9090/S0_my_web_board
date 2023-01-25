@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -41,7 +42,8 @@ public class AjaxTest {
 		return "ajaxtest";
 	}
 	
-	@RequestMapping("/ajaxResponse")
+	// , produces = "text/plain:charset=UTF-8" 은  contentType:"json" 일경우
+	@PostMapping(value="/ajaxResponse")
 	// ajax response 방법 1 - Servlet 방식과 동일
 	public void ajaxResponse_1(HttpServletResponse response
 			, @RequestParam("id") String id
@@ -63,7 +65,7 @@ public class AjaxTest {
 		out.close();
 	}
 	
-	@RequestMapping("/ajaxResponse2")
+	@PostMapping("/ajaxResponse2")
 	// ajax response 방법 2 
 	@ResponseBody
 	public String ajaxResponse_2(
@@ -82,7 +84,7 @@ public class AjaxTest {
 		return new Gson().toJson(map);		
 	}
 	
-	@RequestMapping("/ajaxResponse3")
+	@PostMapping("/ajaxResponse3")
 	// ajax response 방법 3
 	public ModelAndView ajaxResponse_3(
 			@RequestParam("id") String id
@@ -103,7 +105,7 @@ public class AjaxTest {
 		mv.setViewName("jsonView");  // ajax로 Json형태로 전달할 수 있도록 bean id jsonView으로 return함
 		return mv;
 	}
-	@RequestMapping("/ajaxResponse4")
+	@PostMapping("/ajaxResponse4")
 	// ajax response 방법 3
 	@ResponseBody
 	public ResponseEntity<String> ajaxResponse_4(

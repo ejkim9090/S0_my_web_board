@@ -31,7 +31,7 @@ function ajaxTest_1(thisEle){
 	console.log(dataQuery);
 	$.ajax({
 		url:"ajaxResponse"
-		, method:"get"
+		, method:"post"
 		, data: dataQuery
 		, dataType:"json"
 		, success: function(result){
@@ -52,7 +52,7 @@ function ajaxTest_2(thisEle){
 	console.log(dataQuery);
 	$.ajax({
 		url:"ajaxResponse2"
-		, method:"get"
+		, method:"post"
 		, data: dataQuery
 		, dataType:"json"
 		, success: function(result){
@@ -73,7 +73,7 @@ function ajaxTest_3(thisEle){
 	console.log(dataQuery);
 	$.ajax({
 		url:"ajaxResponse3"
-		, method:"get"
+		, method:"post"
 		, data: dataQuery
 		, dataType:"json"
 		, success: function(result){
@@ -94,7 +94,7 @@ function ajaxTest_4(thisEle){
 	console.log(dataQuery);
 	$.ajax({
 		url:"ajaxResponse4"
-		, method:"get"
+		, method:"post"
 		, data: dataQuery
 		, dataType:"json"
 		, success: function(result){
