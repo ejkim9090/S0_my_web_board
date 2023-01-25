@@ -80,6 +80,28 @@ public class AjaxTest {
 		return new Gson().toJson(map);		
 	}
 	
+	@RequestMapping("/ajaxResponse3")
+	// ajax response 방법 3
+	public ModelAndView ajaxResponse_3(
+			@RequestParam("id") String id
+			, @RequestParam("searchword") String searchword
+			, ModelAndView mv
+			) throws Exception{
+		System.out.println("ajaxResponse_3");
+		
+		Member mvo = serviceMember.checkIdDup(id);
+		List<Board> bvolist = serviceBoard.selectListBoard();
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("memberVo", mvo);
+		map.put("boardList", bvolist);
+		map.put("aaa", 111);
+		map.put("bbb", "추가데이터");
+		
+		mv.addAllObjects(map);
+		mv.setViewName("jsonView");  // ajax로 Json형태로 전달할 수 있도록 bean id jsonView으로 return함
+		return mv;
+	}
+	
 	
 	@ExceptionHandler
 	public void exceptionHandler(Exception e) {

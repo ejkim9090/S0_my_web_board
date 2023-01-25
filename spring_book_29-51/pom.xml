@@ -16,9 +16,9 @@
 	</properties>
 	<repositories>
 		<repository>
-		 <id>oracle</id>
-		<name>ORACLE JDBC Repository</name>
-		<url>https://maven.atlassian.com/3rdparty/</url>
+			<id>oracle</id>
+			<name>ORACLE JDBC Repository</name>
+			<url>https://maven.atlassian.com/3rdparty/</url>
 		</repository>
 	</repositories>
 	<dependencies>
@@ -174,36 +174,49 @@
 
 		<!-- File Upload -->
 		<dependency>
-		    <groupId>commons-fileupload</groupId>
-		    <artifactId>commons-fileupload</artifactId>
-		    <version>1.4</version>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.4</version>
 		</dependency>
 		<dependency>
-		    <groupId>commons-io</groupId>
-		    <artifactId>commons-io</artifactId>
-		    <version>2.11.0</version>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.11.0</version>
 		</dependency>
 
 
 		<!-- cloudinary-core -->
 		<dependency>
-		    <groupId>com.cloudinary</groupId>
-		    <artifactId>cloudinary-core</artifactId>
-		    <version>1.32.2</version>
+			<groupId>com.cloudinary</groupId>
+			<artifactId>cloudinary-core</artifactId>
+			<version>1.32.2</version>
 		</dependency>
-		
+
 		<!-- cloudinary-http44 -->
 		<dependency>
-		    <groupId>com.cloudinary</groupId>
-		    <artifactId>cloudinary-http44</artifactId>
-		    <version>1.32.2</version>
+			<groupId>com.cloudinary</groupId>
+			<artifactId>cloudinary-http44</artifactId>
+			<version>1.32.2</version>
 		</dependency>
 		<dependency>
 			<groupId>com.cloudinary</groupId>
 			<artifactId>cloudinary-taglib</artifactId>
 			<version>1.14.0</version>
 		</dependency>
-		
+
+		<!-- JSON -->
+		<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.9.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>net.sf.json-lib</groupId>
+			<artifactId>json-lib-ext-spring</artifactId>
+			<version>1.0.2</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
