@@ -6,6 +6,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link href"<%=request.getContextPath() %>/resources/css/reset.css" rel="stylesheet"/>
+<%-- 
+ <link href="./resources/css/reset.css" rel="stylesheet"/>
+ --%>
 <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
 </head>
 <body>
@@ -18,7 +22,7 @@
 </form>
 
 <button type="button" onclick="ajaxTest_1(this);">ajax test 1</button>
-<button>ajax test 2</button>
+<button type="button" onclick="ajaxTest_2(this);">ajax test 2</button>
 
 <script>
 function ajaxTest_1(thisEle){
@@ -28,8 +32,15 @@ function ajaxTest_1(thisEle){
 		url:"ajaxResponse"
 		, method:"get"
 		, data: dataQuery
+		, dataType:"json"
 		, success: function(result){
 			console.log(result);
+			//console.log(result.id);
+			if(result && result.id){
+				alert("존재하는 id입니다. 다른 id를 작성해주세요.");
+			} else {
+				alert("사용가능id입니다.");
+			}
 		}
 		, error: function(request, status, errordata){
 			alert("error code:"+ request.status +"\n" 
@@ -40,7 +51,28 @@ function ajaxTest_1(thisEle){
 	
 }
 function ajaxTest_2(thisEle){
-	
+	var dataQuery = $("#frmData").serialize();
+	console.log(dataQuery);
+	$.ajax({
+		url:"ajaxResponse2"
+		, method:"get"
+		, data: dataQuery
+		, dataType:"json"
+		, success: function(result){
+			console.log(result);
+			//console.log(result.id);
+			if(result && result.id){
+				alert("존재하는 id입니다. 다른 id를 작성해주세요.");
+			} else {
+				alert("사용가능id입니다.");
+			}
+		}
+		, error: function(request, status, errordata){
+			alert("error code:"+ request.status +"\n" 
+					+"message"+ request.responseText +"\n"
+					+"error"+ errordata +"\n");
+		}
+	});
 }
 
 
