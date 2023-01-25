@@ -25,7 +25,7 @@
 	<select id="selectBoardList" resultMap="resultBoard">
 		select * from board
 	</select>
-	<select id="selectBoardCount" resultType="_int">
-		select count(*) from board
+	<select id="selectBoardCount" resultMap="resultBoard">
+		select count(*) from board 
 	</select>
 </mapper>
