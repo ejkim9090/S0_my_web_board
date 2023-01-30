@@ -14,7 +14,10 @@
 </head>
 <body>
 
-
+<hr>
+${samp }
+${samp.name }
+<hr>
 
 <!-- form 태그는 action method submit 도 없음. ajax에 data에 담기 편하게 하기 위함. -->
 <form id="frmData">
