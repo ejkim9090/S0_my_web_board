@@ -22,7 +22,8 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-@Service("fileSaveService")
+//@Service("fileSaveService")
+@Component("fileSaveService")
 public class FileSaveService {
 	
 	public static String FILE_BOARD_PATH = "/resources/board/";

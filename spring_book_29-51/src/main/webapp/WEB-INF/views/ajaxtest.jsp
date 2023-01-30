@@ -6,13 +6,16 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link href"<%=request.getContextPath() %>/resources/css/reset.css" rel="stylesheet"/>
+<link href"<%=request.getContextPath() %>/css/reset.css" rel="stylesheet"/>
 <%-- 
  <link href="./resources/css/reset.css" rel="stylesheet"/>
  --%>
 <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
 </head>
 <body>
+
+
+
 <!-- form 태그는 action method submit 도 없음. ajax에 data에 담기 편하게 하기 위함. -->
 <form id="frmData">
 	id:<input type="text" name="id" id="id">

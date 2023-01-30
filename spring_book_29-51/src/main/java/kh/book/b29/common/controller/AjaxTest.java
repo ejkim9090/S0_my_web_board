@@ -63,6 +63,7 @@ public class AjaxTest {
 		out.append(new Gson().toJson(map));
 		out.flush();
 		out.close();
+		
 	}
 	
 	@PostMapping("/ajaxResponse2")
@@ -106,10 +107,10 @@ public class AjaxTest {
 		return mv;
 	}
 	@PostMapping("/ajaxResponse4")
-	// ajax response 방법 3
+	// ajax response 방법 4
 	@ResponseBody
 	public ResponseEntity<String> ajaxResponse_4(
-			@RequestParam("id") String id
+			@RequestParam(name="id", defaultValue = "a", required = false) String id
 			, @RequestParam("searchword") String searchword
 			, ModelAndView mv
 			) throws Exception{
@@ -129,7 +130,7 @@ public class AjaxTest {
 	
 	//	@PostMapping(value="/ajaxResponse5", produces = "text/plain; charset=UTF-8")
 	@PostMapping(value="/ajaxResponse5")
-	// ajax response 방법 3
+	// ajax response 방법 5
 	@ResponseBody
 	public ResponseEntity<String> ajaxResponse_5(
 			@RequestBody String dataJson

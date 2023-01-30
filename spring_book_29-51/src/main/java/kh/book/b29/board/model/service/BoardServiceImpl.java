@@ -1,9 +1,11 @@
 package kh.book.b29.board.model.service;
 
-import java.sql.SQLException;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import kh.book.b29.board.model.dao.BoardDao;
@@ -12,47 +14,49 @@ import kh.book.b29.member.model.dao.MemberDao;
 
 @Service
 public class BoardServiceImpl implements BoardService {
+	private static final Logger logger = LoggerFactory.getLogger(BoardServiceImpl.class);
+	
 	@Autowired
 	private BoardDao dao;
 	@Autowired
 	private MemberDao mDao;
-	
+
 	@Override
 	public int insertBoard(Board vo) throws Exception {
 		return dao.insertBoard(vo);
 	}
 
 	@Override
-	public int updateBoard(Board vo)  throws Exception {
+	public int updateBoard(Board vo) throws Exception {
 		insertBoard(vo);
 		deleteBoard(20);
 		return 0;
 	}
 
 	@Override
-	public int deleteBoard(int boardNum)  throws Exception {
+	public int deleteBoard(int boardNum) throws Exception {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public Board selectBoard(int boardNum)  throws Exception {
+	public Board selectBoard(int boardNum) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Board> selectListBoard()  throws Exception {
+	public List<Board> selectListBoard() throws Exception {
 		return dao.selectListBoard();
 	}
 
 	@Override
-	public List<Board> selectListBoard(int currentPageNum, int limits)  throws Exception {
+	public List<Board> selectListBoard(int currentPageNum, int limits) throws Exception {
 		return dao.selectListBoard(currentPageNum, limits);
 	}
 
 	@Override
-	public List<Board> selectListBoard(int currentPageNum, int limits, String searchWord)  throws Exception {
+	public List<Board> selectListBoard(int currentPageNum, int limits, String searchWord) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -67,5 +71,7 @@ public class BoardServiceImpl implements BoardService {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+
 
 }
