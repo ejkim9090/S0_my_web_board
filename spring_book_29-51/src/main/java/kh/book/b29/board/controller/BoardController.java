@@ -1,6 +1,8 @@
 package kh.book.b29.board.controller;
 
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,28 @@ public class BoardController {
 	private BoardService service;
 	@Autowired
 	private FileSaveService fileSaveService;
+	
+	
+	
+	
+	@GetMapping("/test")
+	public String test() {
+		ArrayList<Integer> b = new ArrayList<Integer>();
+		Object a[] = b.toArray();
+		System.out.println(a);
+		System.out.println(b);
+		System.out.println(a.length);
+		System.out.println(b.size());
+		
+		System.out.println();
+		return "home";
+	}
+	@GetMapping("/test2")
+	public ModelAndView test2(ModelAndView mv) {
+		mv.setViewName("home");
+		return mv;
+	}
+	
 	@GetMapping
 	public ModelAndView board(ModelAndView mv
 			) throws Exception {

@@ -17,10 +17,10 @@ public class AroundLog {
 	
 	@Around("commonControllerPointcut()")
 	public Object aroundCtrlLog(ProceedingJoinPoint pjp) throws Throwable {
-		System.out.println("\t[Ctr시작 : " + pjp.getThis() + ", method:" + pjp.getSignature().getName() + "]");
+		System.out.println("▶[" + pjp.getThis() + ", method:" + pjp.getSignature().getName() + "]");
 		Object[] args = pjp.getArgs();
 		for (int i = 0; i < args.length; i++) {
-			System.out.print("\tCtr Args[" + i + "]: " + args[i] + ",\n");
+			System.out.print("▶\targs[" + i + "]: " + args[i] + ",\n");
 		}
 
 		StopWatch sw = new StopWatch();
@@ -29,18 +29,18 @@ public class AroundLog {
 		sw.stop();
 
 		if (ro != null) {
-			System.out.println("\tCtr Ret: " + ro.toString());
+			System.out.println("▶return: " + ro.toString());
 		}
-		System.out.println("\t[Ctr끝: " + sw.getTotalTimeMillis() + "ms]");
+		System.out.println("\t[" + sw.getTotalTimeMillis() + "ms]");
 		System.out.println();
 		return ro;
 	}
 	@Around("commonServicePointcut()")
 	public Object aroundSrvcLog(ProceedingJoinPoint pjp) throws Throwable {
-		System.out.println("\t\t[Srv시작 : " + pjp.getThis() + ", method:" + pjp.getSignature().getName() + "]");
+		System.out.println("▶▶[" + pjp.getThis() + ", method:" + pjp.getSignature().getName() + "]");
 		Object[] args = pjp.getArgs();
 		for (int i = 0; i < args.length; i++) {
-			System.out.print("\t\tSrv Args[" + i + "]: " + args[i] + ",\n");
+			System.out.print("▶▶\targs[" + i + "]: " + args[i] + ",\n");
 		}
 
 		StopWatch sw = new StopWatch();
@@ -49,9 +49,9 @@ public class AroundLog {
 		sw.stop();
 
 		if (ro != null) {
-			System.out.println("\t\tSrv Ret: " + ro.toString());
+			System.out.println("▶▶return: " + ro.toString());
 		}
-		System.out.println("\t\t[Srv끝: " + sw.getTotalTimeMillis() + "ms]");
+		System.out.println("\t[" + sw.getTotalTimeMillis() + "ms]");
 		return ro;
 	}
 }
