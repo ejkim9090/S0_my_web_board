@@ -1,3 +1,5 @@
+<%@page import="kh.s0.kd.board.model.BoardVo"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -5,11 +7,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- TODO: 이곳에 해당 jsp의 css 넣기 -->
 	<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&family=Noto+Sans:wght@100&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./css/reset.css" type="text/css">
 	<link rel="stylesheet" href="./css/main.css" type="text/css">
 	<link rel="stylesheet" href="./css/main_share_section.css" type="text/css">
-	<!-- TODO: 이곳에 해당 jsp의 css 넣기 -->
     <link href="css/notice.css" rel="stylesheet" type="text/css">
     <script src="./js/jquery-3.6.1.js"></script>
     <script src="./js/main_share_scroll_action.js"></script>
@@ -28,6 +30,20 @@
 </head>
 <body>
     <div>
+    
+    <c:forEach items="${list }" var="vo">
+    	${vo.bcontent }
+    </c:forEach>
+    <% 
+    List<BoardVo> a = (List<BoardVo>)(request.getAttribute("list"));
+    
+    for (BoardVo vo : a){
+    	%>
+    	<%=vo.getBcontent() %>
+    	<%
+    }
+    %>
+    
     <%@include file="/WEB-INF/view/header.jsp" %>
         <div id="section">
 
@@ -80,9 +96,11 @@
 </c:choose>
 				<ul class="notice_post_wrapper"> <!-- flex -->
                             <li>
-                            <form action="noticeWrite" method="post">
+                            <form action="noticeWrite" method="post" enctype="multipart/form-data">
                                  <div >제목:<input type="text" name="btitle"></div>
                                  <div >내용:<textarea name="bcontent" cols="30" rows="5" ></textarea></div>
+<!-- 파일첨부 -->
+                                 <div> <input type="file" name="uploadFile" multiple="multiple" rows="10"> </div>
                                  <div ><button type="submit">글등록</button></textarea></div>
                             	<input type="hidden" name="bno" value="${param.bno }">
                             </form>

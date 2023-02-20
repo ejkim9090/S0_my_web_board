@@ -1,11 +1,17 @@
 package kh.s0.kd.board.controller;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.Enumeration;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import kh.s0.kd.board.model.BoardService;
 import kh.s0.kd.board.model.BoardVo;
@@ -49,19 +55,69 @@ public class NoticeWriteController extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html; charset=UTF-8");
 		// 로그인이 안되어있다면 로그인 하고 글쓰기 하도록 유도함.
-		MemberVo loginSsInfo = (MemberVo)request.getSession().getAttribute("loginSsInfo");
-		String bwriter = null;
-		if(loginSsInfo == null) {
-			response.sendRedirect(request.getContextPath()+"/login");
-			return;
-		} else {
-			//로그인 상태라면
-			bwriter = loginSsInfo.getMid();
-		}
-		String btitle = request.getParameter("btitle");
-	    String bcontent = request.getParameter("bcontent");
+		// TODO:
+		String bwriter = "user1";
+//		MemberVo loginSsInfo = (MemberVo)request.getSession().getAttribute("loginSsInfo");
+//		String bwriter = null;
+//		if(loginSsInfo == null) {
+//			response.sendRedirect(request.getContextPath()+"/login");
+//			return;
+//		} else {
+//			//로그인 상태라면
+//			bwriter = loginSsInfo.getMid();
+//		}
+		String saveFolder = "/upload/";
 		
+		String savePath = request.getServletContext().getRealPath(saveFolder);
+		System.out.println("ejkim 여기여기######");
+		System.out.println(request.getServletContext().getRealPath(""));
+		System.out.println(request.getServletContext().getRealPath("upload"));		
+		
+		try {
+			// savePath 폴더가 없다면 폴더생성
+			File path = new File(savePath);
+			System.out.println("path: " + path);
+			if( !path.exists()  ) {
+				path.mkdirs();
+			}	
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		// savePath에 file 저장완료
+		MultipartRequest multi = new MultipartRequest(request, savePath
+				, 10*1024*1024
+				, "UTF-8"
+				, new DefaultFileRenamePolicy() );
+		
+		// 저장된 file 의 정보(file 경로 + file name) 를 읽어오기  --> DB에 저장할 내용임
+		String fileName = "";
+		Enumeration<String> files = multi.getFileNames();
+		while(files.hasMoreElements()) {
+			String name = (String) files.nextElement();   // input type="file" name="xxxxxxx", 즉 bfilepath 와 bfilepaths
+			fileName = multi.getFilesystemName(name);    // 서버에 저장된 파일이름
+			System.out.println("fileName:"+ fileName);
+			File f1 = multi.getFile(name);   // 서버에 file이 정상적으로 저장되어있는지 다시 읽어와서 확인함.
+			if(f1 ==null) {
+				System.out.println("파일 업로드 실패");
+			} else {
+				System.out.println("파일 업로드 성공 : "+f1.length());   // 파일 크기 확인
+			}
+		}
+		
+		
+		
+		String btitle = multi.getParameter("btitle");
+	    String bcontent = multi.getParameter("bcontent");
+	 // multi.getParameter("uploadFile");은 null
+//	    String uploadFile = multi.getFilesystemName("uploadFile");
+////	    multi.getFileNames();
+//	    System.out.println("uploadFile: "+uploadFile);
+//	    String dbFilePath = saveFolder + uploadFile;
+	    
 		BoardService service = new BoardService();
 	    BoardVo vo = new BoardVo();
 	    vo.setBtitle(btitle);

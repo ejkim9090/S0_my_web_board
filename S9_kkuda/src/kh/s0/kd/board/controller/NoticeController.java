@@ -15,7 +15,7 @@ import kh.s0.kd.board.model.BoardVo;
 /**
  * Servlet implementation class NoticeController
  */
-@WebServlet("/notice")
+
 public class NoticeController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -30,6 +30,9 @@ public class NoticeController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html; charset=UTF-8");
+		
 		BoardService service = new BoardService();
 		final int pageSize = 10; // 페이지당글수 2
 		final int pageBlock = 3; // 페이지링크수 3 예)게시글하단에  1 2 3 >>  << 4 5 6 >>  << 7 8
@@ -70,7 +73,9 @@ public class NoticeController extends HttpServlet {
 			if(endRnum > cnt ) {
 				endRnum = cnt;
 			}
-			
+			System.out.println(startRnum);
+			System.out.println(endRnum);
+			System.out.println(searchword);
 			List<BoardVo> boardlist = new BoardService().selectList(startRnum, endRnum, searchword);
 			request.setAttribute("boardlist", boardlist);
 		} finally {
@@ -81,7 +86,7 @@ public class NoticeController extends HttpServlet {
 			request.setAttribute("startPage", startPage);
 			request.setAttribute("endPage", endPage);
 			request.setAttribute("currentPage", currentPage);			
-			String viewPath = "WEB-INF/view/board/notice.jsp";
+			String viewPath = /* 적지 않아야 함.request.getContextPath()+ */"/WEB-INF/view/board/notice.jsp";
 			request.getRequestDispatcher(viewPath).forward(request, response);
 		}
 

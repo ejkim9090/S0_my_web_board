@@ -181,12 +181,15 @@ public class BoardDao {
 			JdbcTemplate.close(rs);
 			JdbcTemplate.close(pstmt);
 		}
-		
+		System.out.println(volist);
 		return volist;
 	}
 	
 //	selectList  - 목록조회 페이징 - overloading 
 	public List<BoardVo> selectList(Connection conn, int startRnum, int endRnum, String searchword){
+		System.out.println(startRnum);
+		System.out.println(endRnum);
+		System.out.println(searchword);
 		List<BoardVo> volist = null;
 		
 		String sql = "select * from (select t1.*, rownum r from "

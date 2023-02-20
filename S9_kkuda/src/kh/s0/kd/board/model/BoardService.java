@@ -11,11 +11,19 @@ public class BoardService {
 // 최소 5개 CRUD
 //	insert
 	public int insert(BoardVo vo) {
+		BoardDao dao2 = new BoardDao();
+		dao2.delete(conn, bno);
+		
+		new BoardDao().delete(conn, bno);
+		
+		
+		
 		System.out.println(">>BoardService Param :"+ vo);
 		int result = 0;  // insert, 0오류, 1정상
 		int result2 = 0;  // update, -1오류, 012..정상
 		Connection conn = JdbcTemplate.getConnection();
 		JdbcTemplate.setAutoCommit(conn, false);
+		
 		if(vo.getBno() != 0) {
 			//답글
 			result2 = dao.updateForInsert(conn, vo);
@@ -62,16 +70,21 @@ public class BoardService {
 		volist = dao.selectList(conn);
 		
 		JdbcTemplate.close(conn);
+		System.out.println("BoardService > selectList return:"+volist);
 		return volist;
 	}
 //	selectList - overloading
 	public List<BoardVo> selectList(int startRnum, int endRnum, String searchword){
+		System.out.println("BoardService > selectList param 1:"+ startRnum);
+		System.out.println("BoardService > selectList param 2:"+ endRnum);
+		System.out.println("BoardService > selectList param 3:"+ searchword);
 		List<BoardVo> volist = null;
 		Connection conn = JdbcTemplate.getConnection();
 	
 		volist = dao.selectList(conn, startRnum, endRnum, searchword);
 		
 		JdbcTemplate.close(conn);
+		System.out.println("BoardService > selectList return:"+volist);
 		return volist;
 	}
 //		selectOne
